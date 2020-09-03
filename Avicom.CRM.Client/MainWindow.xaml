@@ -64,21 +64,21 @@
                 <DataGridTextColumn
                     Header="Название" 
                     Width="*"
-                    Binding="{Binding Name}" />
+                    Binding="{Binding Name,UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTemplateColumn Header="Статус"
                                         Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path=ContractStatus, Converter={StaticResource enumConverter}}" />
+                            <TextBlock Text="{Binding Path=ContractStatus,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource enumConverter}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <ComboBox ItemsSource="{Binding Source={StaticResource GetEnumValues}}" 
-                                      SelectedItem="{Binding ContractStatus, Converter={StaticResource enumConverter}}">
+                                      SelectedItem="{Binding ContractStatus, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource enumConverter}}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Path=., Converter={StaticResource enumConverter}}" />
+                                        <TextBlock Text="{Binding Path=., UpdateSourceTrigger=PropertyChanged, Converter={StaticResource enumConverter}}" />
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
@@ -86,6 +86,12 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="CellEditEnding">
+                    <i:InvokeCommandAction
+                            Command="{Binding SaveChanges}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </DataGrid>
 
         <Grid Grid.Column="2" Grid.Row="1">
