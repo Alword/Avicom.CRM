@@ -1,0 +1,96 @@
+﻿<Window x:Class="Avicom.CRM.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Avicom.CRM.Client.ViewModel" 
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:data="clr-namespace:Avicom.CRM.Data.Enums;assembly=Avicom.CRM.Data"
+        xmlns:local="clr-namespace:Avicom.CRM.Client"
+        mc:Ignorable="d"
+        Title="Ромашка и Партнёры" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="GetEnumValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="data:ContractStatus"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Control"
+                    Key="S"
+                    Command="{Binding SaveChanges}" />
+    </Window.InputBindings>
+
+    <Grid DataContext="{Binding}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Menu Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Сохранить (Ctrl+S)" Command="{Binding SaveChanges}" ></MenuItem>
+            </MenuItem>
+        </Menu>
+        
+        <DataGrid AutoGenerateColumns="False"
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  SelectedItem="{Binding SelectedCompany}"
+                  ItemsSource="{Binding Companies}"
+                  HorizontalGridLinesBrush="DarkGray"
+                  RowBackground="LightGray" 
+                  AlternatingRowBackground="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Header="Id" 
+                    Binding="{Binding Id}" 
+                    Width="" />
+                <DataGridTextColumn
+                    Header="Название" 
+                    Width="*"
+                    Binding="{Binding Name}" />
+                <DataGridComboBoxColumn Header="Статус" 
+                                        Width="120"
+                                        ItemsSource="{Binding Source={StaticResource GetEnumValues}}"
+                                        SelectedValueBinding="{Binding ContractStatus}">
+                </DataGridComboBoxColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Column="2" Grid.Row="1">
+            <DataGrid AutoGenerateColumns="False"
+                  ItemsSource="{Binding SelectedCompany.Users}"
+                  HorizontalGridLinesBrush="DarkGray"
+                  RowBackground="LightGray" 
+                  AlternatingRowBackground="White">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                    Header="Id" 
+                    Binding="{Binding Id}" 
+                    Width="" />
+                    <DataGridTextColumn
+                    Header="Название" 
+                    Width="*"
+                    Binding="{Binding Name}" />
+                    <DataGridTextColumn
+                    Header="Логин" 
+                    Width="*"
+                    Binding="{Binding Login}" />
+                    <DataGridTextColumn
+                    Header="Пароль" 
+                    Width="*"
+                    Binding="{Binding Password}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

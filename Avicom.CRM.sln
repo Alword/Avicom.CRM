@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avicom.CRM.Client", "Avicom.CRM.Client\Avicom.CRM.Client.csproj", "{62C19103-112F-436D-A434-AF73F15F2676}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avicom.CRM.Data", "Avicom.CRM.Data\Avicom.CRM.Data.csproj", "{C450D46E-1FCE-4E35-8FAD-1061128172FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TSQL", "TSQL", "{9DAE9F79-0A4C-42E8-94C1-E670E96B2892}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Downloads\seed.sql = ..\..\..\Downloads\seed.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62C19103-112F-436D-A434-AF73F15F2676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62C19103-112F-436D-A434-AF73F15F2676}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62C19103-112F-436D-A434-AF73F15F2676}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62C19103-112F-436D-A434-AF73F15F2676}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C450D46E-1FCE-4E35-8FAD-1061128172FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C450D46E-1FCE-4E35-8FAD-1061128172FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C450D46E-1FCE-4E35-8FAD-1061128172FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C450D46E-1FCE-4E35-8FAD-1061128172FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DADD4AC8-E899-42A4-BEEC-F895EEE6AEAA}
+	EndGlobalSection
+EndGlobal
