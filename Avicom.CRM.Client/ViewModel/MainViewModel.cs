@@ -43,7 +43,10 @@ namespace Avicom.CRM.Client.ViewModel
             avicomContext.Companies.Load();
             Companies = avicomContext.Companies.Local;
             Companies.CollectionChanged += Companies_CollectionChanged;
-            SaveChanges = new DelegateCommand(() => avicomContext.SaveChanges());
+            SaveChanges = new DelegateCommand(
+                () =>
+                avicomContext.SaveChanges()
+                );
         }
         public ICommand SaveChanges { get; private set; }
         private void Companies_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

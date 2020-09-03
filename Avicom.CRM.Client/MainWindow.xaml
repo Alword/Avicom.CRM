@@ -8,6 +8,7 @@
         xmlns:data="clr-namespace:Avicom.CRM.Data.Enums;assembly=Avicom.CRM.Data"
         xmlns:local="clr-namespace:Avicom.CRM.Client"
         xmlns:converter="clr-namespace:Avicom.CRM.Client.Converters"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="Ромашка и Партнёры" Height="450" Width="800">
     <Window.DataContext>
@@ -96,21 +97,27 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn
                     Header="Id" 
-                    Binding="{Binding Id}" 
+                    Binding="{Binding Id,UpdateSourceTrigger=PropertyChanged}" 
                     Width="" />
                     <DataGridTextColumn
                     Header="Название" 
                     Width="*"
-                    Binding="{Binding Name}" />
+                    Binding="{Binding Name,UpdateSourceTrigger=PropertyChanged}" />
                     <DataGridTextColumn
                     Header="Логин" 
                     Width="*"
-                    Binding="{Binding Login}" />
+                    Binding="{Binding Login,UpdateSourceTrigger=PropertyChanged}" />
                     <DataGridTextColumn
                     Header="Пароль" 
                     Width="*"
-                    Binding="{Binding Password}" />
+                    Binding="{Binding Password,UpdateSourceTrigger=PropertyChanged}" />
                 </DataGrid.Columns>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="CellEditEnding">
+                        <i:InvokeCommandAction
+                            Command="{Binding SaveChanges}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </DataGrid>
         </Grid>
     </Grid>
