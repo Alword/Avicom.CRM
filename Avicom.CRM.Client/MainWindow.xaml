@@ -89,7 +89,7 @@
 
         <Grid Grid.Column="2" Grid.Row="1">
             <DataGrid AutoGenerateColumns="False"
-                  ItemsSource="{Binding SelectedCompany.Users}"
+                  ItemsSource="{Binding Users}"
                   HorizontalGridLinesBrush="DarkGray"
                   RowBackground="LightGray" 
                   AlternatingRowBackground="White">
