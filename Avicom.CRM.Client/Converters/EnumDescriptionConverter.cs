@@ -1,4 +1,5 @@
 ﻿using Avicom.CRM.Data.Enums;
+using Avicom.CRM.Shared;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,18 +15,21 @@ namespace Avicom.CRM.Client.Converters
 {
     public class EnumDescriptionConverter : IValueConverter
     {
-        public static List<string> ContractTypes { get; } = new List<string>
+        private static Map<string, ContractStatus> convertMap;
+
+        static EnumDescriptionConverter()
         {
-            "Ещё не заключен",
-            "Заключен",
-            "Расторгнут"
-        };
+            convertMap = new Map<string, ContractStatus>();
+            convertMap.Add("Ещё не заключен", ContractStatus.NotYetConcluded);
+            convertMap.Add("Заключен", ContractStatus.Concluded);
+            convertMap.Add("Расторгнут", ContractStatus.Cancelled);
+        }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null) return DependencyProperty.UnsetValue;
 
-            return GetDescription((Enum)value);
+            return GetDescription((ContractStatus)value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -33,19 +37,9 @@ namespace Avicom.CRM.Client.Converters
             return value;
         }
 
-        public static string GetDescription(Enum en)
+        public static string GetDescription(ContractStatus en)
         {
-            Type type = en.GetType();
-            MemberInfo[] memInfo = type.GetMember(en.ToString());
-            if (memInfo != null && memInfo.Length > 0)
-            {
-                object[] attrs = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
-                if (attrs != null && attrs.Length > 0)
-                {
-                    return ((DescriptionAttribute)attrs[0]).Description;
-                }
-            }
-            return en.ToString();
+            return convertMap[en];
         }
     }
 }

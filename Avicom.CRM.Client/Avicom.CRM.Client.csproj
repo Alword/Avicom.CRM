@@ -123,6 +123,10 @@
       <Project>{C450D46E-1FCE-4E35-8FAD-1061128172FB}</Project>
       <Name>Avicom.CRM.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Avicom.CRM.Shared\Avicom.CRM.Shared.csproj">
+      <Project>{966AAA21-7999-45CC-B08F-54EFA1E737E2}</Project>
+      <Name>Avicom.CRM.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
