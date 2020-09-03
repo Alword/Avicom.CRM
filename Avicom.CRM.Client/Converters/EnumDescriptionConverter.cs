@@ -37,9 +37,9 @@ namespace Avicom.CRM.Client.Converters
             return value;
         }
 
-        public static string GetDescription(ContractStatus en)
+        public static string GetDescription(ContractStatus status)
         {
-            return convertMap[en];
+            return convertMap[status];
         }
     }
 }
