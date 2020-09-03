@@ -18,20 +18,6 @@ namespace Avicom.CRM.Shared
             this.Reverse = new Indexer<T2, T1>(_reverse);
         }
 
-        public class Indexer<T3, T4>
-        {
-            private Dictionary<T3, T4> _dictionary;
-            public Indexer(Dictionary<T3, T4> dictionary)
-            {
-                _dictionary = dictionary;
-            }
-            public T4 this[T3 index]
-            {
-                get { return _dictionary[index]; }
-                set { _dictionary[index] = value; }
-            }
-        }
-
         public T1 this[T2 index]
         {
             get { return Reverse[index]; }
