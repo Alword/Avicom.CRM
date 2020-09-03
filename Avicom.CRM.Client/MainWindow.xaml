@@ -7,18 +7,24 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:data="clr-namespace:Avicom.CRM.Data.Enums;assembly=Avicom.CRM.Data"
         xmlns:local="clr-namespace:Avicom.CRM.Client"
+        xmlns:converter="clr-namespace:Avicom.CRM.Client.Converters"
         mc:Ignorable="d"
         Title="Ромашка и Партнёры" Height="450" Width="800">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
+
     <Window.Resources>
-        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="GetEnumValues">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="data:ContractStatus"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
+        <ResourceDictionary>
+            <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="GetEnumValues">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="data:ContractStatus"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <converter:EnumDescriptionConverter x:Key="enumConverter" />
+        </ResourceDictionary>
     </Window.Resources>
+
     <Window.InputBindings>
         <KeyBinding Modifiers="Control"
                     Key="S"
@@ -40,7 +46,7 @@
                 <MenuItem Header="Сохранить (Ctrl+S)" Command="{Binding SaveChanges}" ></MenuItem>
             </MenuItem>
         </Menu>
-        
+
         <DataGrid AutoGenerateColumns="False"
                   Grid.Row="1"
                   Grid.Column="0"
@@ -58,11 +64,26 @@
                     Header="Название" 
                     Width="*"
                     Binding="{Binding Name}" />
-                <DataGridComboBoxColumn Header="Статус" 
-                                        Width="120"
-                                        ItemsSource="{Binding Source={StaticResource GetEnumValues}}"
-                                        SelectedValueBinding="{Binding ContractStatus}">
-                </DataGridComboBoxColumn>
+                <DataGridTemplateColumn Header="Статус"
+                                        Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=ContractStatus, Converter={StaticResource enumConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource GetEnumValues}}" 
+                                      SelectedItem="{Binding ContractStatus, Converter={StaticResource enumConverter}}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=., Converter={StaticResource enumConverter}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
