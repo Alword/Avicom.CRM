@@ -42,12 +42,12 @@ namespace Avicom.CRM.Client.ViewModel
                 if (SelectedCompany != null)
                 {
                     if (Users != null)
-                        Users.CollectionChanged -= Users_CollectionChanged;
+                        Users.CollectionChanged -= Companies_CollectionChanged;
 
                     Users = new ObservableCollection<UserProperty>(
                         users.All(e => e.CompanyId == SelectedCompany.Id).Select(e => new UserProperty(e)));
 
-                    Users.CollectionChanged += Users_CollectionChanged;
+                    Users.CollectionChanged += Companies_CollectionChanged;
                 }
             });
 
@@ -93,18 +93,9 @@ namespace Avicom.CRM.Client.ViewModel
                     {
                         await companies.RemoveAsync(c => c.Id == company.Id);
                     }
-                }
-            }
-        }
-        private async void Users_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.OldItems != null)
-            {
-                foreach (var item in e.OldItems)
-                {
-                    if (item is UserProperty company)
+                    else if (item is UserProperty user)
                     {
-                        await users.RemoveAsync(c => c.Id == company.Id);
+                        await users.RemoveAsync(c => c.Id == user.Id);
                     }
                 }
             }
