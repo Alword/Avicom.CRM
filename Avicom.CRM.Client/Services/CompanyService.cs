@@ -34,12 +34,12 @@ namespace Avicom.CRM.Client.Services
         {
             using (AvicomContext context = new AvicomContext())
             {
-                var users = context.Companies.Where(expression).AsNoTracking();
+                var users = context.Companies.Where(expression);
                 context.Companies.RemoveRange(users);
                 return await context.SaveChangesAsync();
             }
         }
-        public override async Task UpdateAsync(Company entity)
+        public override async Task<Company> UpdateAsync(Company entity)
         {
             using (AvicomContext context = new AvicomContext())
             {
@@ -50,6 +50,7 @@ namespace Avicom.CRM.Client.Services
                     editEntity.ContractStatus = entity.ContractStatus;
                 }
                 await context.SaveChangesAsync();
+                return editEntity;
             }
         }
     }

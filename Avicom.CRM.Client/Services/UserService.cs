@@ -40,7 +40,7 @@ namespace Avicom.CRM.Client.Services
                 return await context.SaveChangesAsync();
             }
         }
-        public override async Task UpdateAsync(User user)
+        public override async Task<User> UpdateAsync(User user)
         {
             using (AvicomContext context = new AvicomContext())
             {
@@ -52,6 +52,7 @@ namespace Avicom.CRM.Client.Services
                     editUser.Password = user.Password;
                 }
                 await context.SaveChangesAsync();
+                return editUser;
             }
         }
     }

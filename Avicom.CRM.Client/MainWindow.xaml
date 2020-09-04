@@ -46,8 +46,8 @@
         <DataGrid AutoGenerateColumns="False"
                   Grid.Row="1"
                   Grid.Column="0"
-                  SelectedItem="{Binding SelectedCompany}"
-                  ItemsSource="{Binding Companies}"
+                  SelectedItem="{Binding SelectedCompany,Mode=TwoWay}"
+                  ItemsSource="{Binding Companies,Mode=TwoWay}"
                   HorizontalGridLinesBrush="DarkGray"
                   RowBackground="LightGray" 
                   AlternatingRowBackground="White">
@@ -88,7 +88,14 @@
                 </i:EventTrigger>
                 <i:EventTrigger EventName="SelectedCellsChanged">
                     <i:InvokeCommandAction
+                        CommandParameter="{Binding CompanyEvent}"
                             Command="{Binding CompanySelectionChanged}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="AddingNewItem">
+                    <i:InvokeCommandAction
+                        CommandParameter="{Binding Params}"
+                        PassEventArgsToCommand="True"
+                        Command="{Binding CompanyAddItem}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </DataGrid>
@@ -96,8 +103,9 @@
         <!-- Users grid -->
         <Grid Grid.Column="2" Grid.Row="1">
             <DataGrid AutoGenerateColumns="False"
+                      
                   ItemsSource="{Binding Users}"
-                  SelectedItem="{Binding SelectedUser}"
+                  SelectedItem="{Binding SelectedUser,Mode=TwoWay}"
                   HorizontalGridLinesBrush="DarkGray"
                   RowBackground="LightGray" 
                   AlternatingRowBackground="White">

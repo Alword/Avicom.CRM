@@ -12,6 +12,6 @@ namespace Avicom.CRM.Client.Services
         public abstract T[] All(Expression<Func<T, bool>> expression = null);
         public abstract Task<T> AddAsync(T user);
         public abstract Task<int> RemoveAsync(Expression<Func<T, bool>> expression);
-        public abstract Task UpdateAsync(T entity);
+        public abstract Task<T> UpdateAsync(T entity);
     }
 }
