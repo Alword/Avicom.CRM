@@ -35,7 +35,7 @@ namespace Avicom.CRM.Client.Services
         {
             using (AvicomContext context = new AvicomContext())
             {
-                var users = context.Users.Where(expression).AsNoTracking();
+                var users = context.Users.Where(expression);
                 context.Users.RemoveRange(users);
                 return await context.SaveChangesAsync();
             }

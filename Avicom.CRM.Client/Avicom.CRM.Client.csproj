@@ -81,9 +81,11 @@
     </ApplicationDefinition>
     <Compile Include="Converters\EnumDescriptionConverter.cs" />
     <Compile Include="Model\CompanyProperty.cs" />
+    <Compile Include="Model\UserProperty.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="ViewModel\Expression.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

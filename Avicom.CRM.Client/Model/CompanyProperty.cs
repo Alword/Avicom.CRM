@@ -17,7 +17,7 @@ namespace Avicom.CRM.Client.Model
         {
             this.Id = company.Id;
             this.Name = company.Name;
-            this.ContractStatus = ContractStatus;
+            this.ContractStatus = company.ContractStatus;
         }
         public int Id { get; set; }
         public string Name { get; set; }
