@@ -9,7 +9,7 @@ namespace Avicom.CRM.Client.Services
 {
     public abstract class BaseService<T> where T : class
     {
-        public abstract T[] All(Expression<Func<T, bool>> expression);
+        public abstract T[] All(Expression<Func<T, bool>> expression = null);
         public abstract Task<T> AddAsync(T user);
         public abstract Task<int> RemoveAsync(Expression<Func<T, bool>> expression);
         public abstract Task UpdateAsync(T entity);

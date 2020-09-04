@@ -11,11 +11,14 @@ namespace Avicom.CRM.Client.Services
 {
     public class CompanyService : BaseService<Company>
     {
-        public override Company[] All(Expression<Func<Company, bool>> expression)
+        public override Company[] All(Expression<Func<Company, bool>> expression = null)
         {
             using (AvicomContext context = new AvicomContext())
             {
-                return context.Companies.Where(expression).AsNoTracking().ToArray();
+                if (expression == null)
+                    return context.Companies.AsNoTracking().ToArray();
+                else
+                    return context.Companies.Where(expression).AsNoTracking().ToArray();
             }
         }
         public override async Task<Company> AddAsync(Company user)

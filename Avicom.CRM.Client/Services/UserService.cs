@@ -12,11 +12,14 @@ namespace Avicom.CRM.Client.Services
 {
     public class UserService : BaseService<User>
     {
-        public override User[] All(Expression<Func<User, bool>> expression)
+        public override User[] All(Expression<Func<User, bool>> expression = null)
         {
             using (AvicomContext context = new AvicomContext())
             {
-                return context.Users.Where(expression).AsNoTracking().ToArray();
+                if (expression == null)
+                    return context.Users.AsNoTracking().ToArray();
+                else
+                    return context.Users.Where(expression).AsNoTracking().ToArray();
             }
         }
         public override async Task<User> AddAsync(User user)

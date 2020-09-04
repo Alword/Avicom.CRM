@@ -42,12 +42,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Menu Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top">
-            <MenuItem Header="Файл">
-                <MenuItem Header="Сохранить (Ctrl+S)" Command="{Binding SaveChanges}" ></MenuItem>
-            </MenuItem>
-        </Menu>
-
+        <!-- Companies grid -->
         <DataGrid AutoGenerateColumns="False"
                   Grid.Row="1"
                   Grid.Column="0"
@@ -89,14 +84,20 @@
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="CellEditEnding">
                     <i:InvokeCommandAction
-                            Command="{Binding SaveChanges}"/>
+                            Command="{Binding CompanyEditEnd}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="SelectedCellsChanged">
+                    <i:InvokeCommandAction
+                            Command="{Binding CompanySelectionChanged}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </DataGrid>
 
+        <!-- Users grid -->
         <Grid Grid.Column="2" Grid.Row="1">
             <DataGrid AutoGenerateColumns="False"
                   ItemsSource="{Binding Users}"
+                  SelectedItem="{Binding SelectedUser}"
                   HorizontalGridLinesBrush="DarkGray"
                   RowBackground="LightGray" 
                   AlternatingRowBackground="White">
@@ -121,7 +122,7 @@
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="CellEditEnding">
                         <i:InvokeCommandAction
-                            Command="{Binding SaveChanges}"/>
+                            Command="{Binding UserEditEnd}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </DataGrid>
