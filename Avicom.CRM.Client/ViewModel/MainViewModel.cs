@@ -1,4 +1,5 @@
-﻿using Avicom.CRM.Client.Model;
+﻿using Avicom.CRM.Client.Extentions;
+using Avicom.CRM.Client.Model;
 using Avicom.CRM.Client.Services;
 using Avicom.CRM.Data;
 using Avicom.CRM.Data.Enums;
@@ -28,26 +29,29 @@ namespace Avicom.CRM.Client.ViewModel
         public CompanyProperty SelectedCompany { get; set; }
         public ObservableCollection<CompanyProperty> Companies { get; set; }
         public ObservableCollection<UserProperty> Users { get; private set; }
+        public ICommand CompanyEditEnd { get; private set; }
+        public ICommand CompanySelectionChanged { get; private set; }
+        public ICommand UserEditEnd { get; private set; }
         public MainViewModel()
         {
             // should be injected?
             users = new UserService();
             companies = new CompanyService();
-            Companies = new ObservableCollection<CompanyProperty>(
-                companies.All().Select(e => new CompanyProperty(e)));
 
-            Companies.CollectionChanged += Companies_CollectionChanged;
+            Companies = new ObservableCollection<CompanyProperty>(companies.AsCompanyProperty());
+            Companies.CollectionChanged += CollectionChanged;
+
             CompanySelectionChanged = new DelegateCommand(() =>
             {
                 if (SelectedCompany != null)
                 {
                     if (Users != null)
-                        Users.CollectionChanged -= Companies_CollectionChanged;
+                        Users.CollectionChanged -= CollectionChanged;
 
-                    Users = new ObservableCollection<UserProperty>(
-                        users.All(e => e.CompanyId == SelectedCompany.Id).Select(e => new UserProperty(e)));
+                    var userProperties = users.AsUserProperty(e => e.CompanyId == SelectedCompany.Id);
+                    Users = new ObservableCollection<UserProperty>(userProperties);
 
-                    Users.CollectionChanged += Companies_CollectionChanged;
+                    Users.CollectionChanged += CollectionChanged;
                 }
             });
 
@@ -79,11 +83,7 @@ namespace Avicom.CRM.Client.ViewModel
                 }
             });
         }
-        public ICommand CompanyEditEnd { get; private set; }
-        public ICommand CompanySelectionChanged { get; private set; }
-        public ICommand UserEditEnd { get; private set; }
-
-        private async void Companies_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private async void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.OldItems != null)
             {
@@ -99,6 +99,11 @@ namespace Avicom.CRM.Client.ViewModel
                     }
                 }
             }
+        }
+        ~MainViewModel()
+        {
+            if (Users != null)
+                Users.CollectionChanged -= CollectionChanged;
         }
     }
 }
