@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace Avicom.CRM.Client.Services
 {
-    public class UserService
+    public class UserService : BaseService<User>
     {
-        public User[] Users(Expression<Func<User, bool>> expression)
+        public override User[] All(Expression<Func<User, bool>> expression)
         {
             using (AvicomContext context = new AvicomContext())
             {
                 return context.Users.Where(expression).AsNoTracking().ToArray();
             }
         }
-        public async Task<User> AddUserAsync(User user)
+        public override async Task<User> AddAsync(User user)
         {
             using (AvicomContext context = new AvicomContext())
             {
@@ -28,7 +28,7 @@ namespace Avicom.CRM.Client.Services
                 return user;
             }
         }
-        public async Task<int> RemoveUserAsync(Expression<Func<User, bool>> expression)
+        public override async Task<int> RemoveAsync(Expression<Func<User, bool>> expression)
         {
             using (AvicomContext context = new AvicomContext())
             {
@@ -37,7 +37,7 @@ namespace Avicom.CRM.Client.Services
                 return await context.SaveChangesAsync();
             }
         }
-        public async Task UpdateUserAsync(User user)
+        public override async Task UpdateAsync(User user)
         {
             using (AvicomContext context = new AvicomContext())
             {

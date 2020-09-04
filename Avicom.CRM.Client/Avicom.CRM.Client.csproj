@@ -80,6 +80,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\EnumDescriptionConverter.cs" />
+    <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
